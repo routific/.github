@@ -1,0 +1,16 @@
+name: PR Title Validator
+
+on:
+  pull_request:
+    types: [opened, edited, labeled, unlabeled, synchronize]
+    branches:    
+      - 'develop'
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: JIRA-prefix pull request title valiation
+        uses: Onemind-Services-LLC/actions-pr-label-enforcer@v1
+        with:
+          github_token: ${{ github.token }} 
