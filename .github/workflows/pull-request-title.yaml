@@ -2,12 +2,14 @@ name: PR Title Validator
 
 on:
   workflow_call:
-
+  
 jobs:
-  execute:
+  check-pr-title:
     runs-on: ubuntu-latest
     steps:
       - name: JIRA-prefix pull request title valiation
-        uses: Onemind-Services-LLC/actions-pr-label-enforcer@v1
+        uses: deepakputhraya/action-pr-title@v1.0.2
         with:
-          github_token: ${{ github.token }} 
+          regex: '\[((RT|DMT|BUG|V3R|UR|GTM)-\d+)\] +' # Regex the title should match.
+          min_length: 5 # Min length of the title
+          github_token: ${{ github.token }} # Default: ${{ github.token }}
