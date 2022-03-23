@@ -9,3 +9,5 @@ jobs:
     steps:
       - name: Pull Request label validator
         uses: Onemind-Services-LLC/actions-pr-label-enforcer@v1.0.3 
+        with:
+          github-token: ${{ github.token }}
