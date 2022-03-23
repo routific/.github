@@ -8,6 +8,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull Request label validator
-        uses: Onemind-Services-LLC/actions-pr-label-enforcer@v1.0.3 
+        uses: mheap/github-action-required-labels@v1
         with:
+          mode: minimum
+          count: 1
           github-token: ${{ github.token }}
