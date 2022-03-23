@@ -4,8 +4,8 @@ on:
   workflow_call:
 
 jobs:
-  execute:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: Pull Request label validator
-        uses: Onemind-Services-LLC/actions-pr-label-enforcer@v1
+        uses: Oyogevbd/enforce-label-action@2.2.1
