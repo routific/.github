@@ -4,7 +4,7 @@ on:
   workflow_call:
   
 jobs:
-  check-pr-title:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - name: JIRA-prefix pull request title valiation
