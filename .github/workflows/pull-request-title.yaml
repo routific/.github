@@ -1,10 +1,7 @@
 name: PR Title Validator
 
 on:
-  pull_request:
-    types: [opened, edited, labeled, unlabeled, synchronize]
-    branches:    
-      - 'develop'
+  workflow_call:
 
 jobs:
   execute:
