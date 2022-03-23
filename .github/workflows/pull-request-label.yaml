@@ -1,0 +1,14 @@
+name: PR Label Validator
+
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+    branches:    
+      - 'develop'
+
+jobs:
+  execute:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Request label validator
+        uses: Onemind-Services-LLC/actions-pr-label-enforcer@v1
