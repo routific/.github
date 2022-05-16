@@ -1,0 +1,53 @@
+name: 'Match branch'
+description: 'Get the matching branch from the input external repo'
+inputs:
+  namespace: 
+    description: 'Namespace for your workspace'
+    required: true
+  repo-owner: 
+    description: 'GitHub user that owns the repo'
+    required: true
+  repo-name: 
+    description: 'GitHub repo name'
+    required: true
+  token: 
+    description: 'GitHub PAT token'
+    required: true
+outputs:
+  branch:
+    description: "The matching repo branch"
+    value: ${{ steps.repo-branch.outputs.match }}
+runs:
+  using: "composite"
+  steps: 
+    - name: Try to retrieve PR from @${{ inputs.repo-owner }}/${{ inputs.repo-name }}
+      uses: octokit/request-action@v2.x
+      id: request-repo-pr
+      with:
+        route: GET /search/issues
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+        INPUT_Q: 'head:${{ inputs.namespace }}+repo:${{ inputs.repo-owner }}/${{ inputs.repo-name }}+type:pr+is:open+is:unmerged'
+
+    - name: Output @${{ inputs.repo-owner }}/${{ inputs.repo-name }} PR
+      id: repo-pr
+      shell: bash
+      run: |
+        echo "::set-output name=match::$(echo ${{ fromJson(steps.request-repo-pr.outputs.data).items[0].number }})"
+
+    - name: Try to retrieve branch from @${{ inputs.repo-owner }}/${{ inputs.repo-name }}
+      uses: octokit/request-action@v2.x
+      id: request-repo-branch
+      with:
+        route: GET /repos/:owner/:repository/pulls/:pull_number
+      env:
+        GITHUB_TOKEN: ${{ inputs.token }}
+        INPUT_OWNER: ${{ inputs.repo-owner }}
+        INPUT_REPOSITORY: ${{ inputs.repo-name }}
+        INPUT_PULL_NUMBER: ${{ steps.repo-pr.outputs.match }}
+
+    - name: Output ${{ inputs.repo-owner }}/${{ inputs.repo-name }} repo branch
+      id: repo-branch
+      shell: bash
+      run: |
+        echo "::set-output name=match::$(echo ${{ fromJson(steps.request-repo-branch.outputs.data).head.ref }})"
