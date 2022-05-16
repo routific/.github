@@ -1,0 +1,25 @@
+name: 'Namespace prefix'
+description: 'Get the workspace namespace by deconstructing the branch name'
+outputs:
+  prefix:
+    description: "The workspace namespace"
+    value: ${{ steps.namespace.outputs.match }}
+runs:
+  using: "composite"
+  steps: 
+    - name: Get branch name
+      id: branch-name
+      uses: tj-actions/branch-names@v5.2
+
+    - name: Get normalized branch name
+      id: normalized-branch
+      shell: bash
+      run: |
+        echo "::set-output name=value::$(echo ${{ steps.branch-name.outputs.current_branch }} | tr '[:upper:]' '[:lower:]')\n"
+
+    - uses: actions-ecosystem/action-regex-match@v2
+      id: namespace
+      with:
+        text: ${{ steps.normalized-branch.outputs.value }}
+        regex: '^((rout|rt|dmt|bug|v3r|ur|gtm)-[0-9]+)'
+        flags: 'g'
