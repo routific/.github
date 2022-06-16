@@ -27,7 +27,7 @@ runs:
         route: GET /search/issues
       env:
         GITHUB_TOKEN: ${{ inputs.token }}
-        INPUT_Q: 'head:${{ inputs.namespace }}+repo:${{ inputs.repo-owner }}/${{ inputs.repo-name }}+type:pr+is:open+is:unmerged'
+        INPUT_Q: 'head:${{ inputs.namespace }}-+repo:${{ inputs.repo-owner }}/${{ inputs.repo-name }}+type:pr+is:open+is:unmerged'
 
     - name: Output @${{ inputs.repo-owner }}/${{ inputs.repo-name }} PR
       id: repo-pr
