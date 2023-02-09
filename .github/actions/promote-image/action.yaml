@@ -1,0 +1,21 @@
+name: 'Promote Images'
+description: 'Gets and image from a provided GCP project Artifact Registry and pushes to a more mature project environment, expects docker to already be logged in.'
+inputs:
+  source_registry:
+    description: 'Project where image is available'
+    required: true
+  destination_registry: 
+    description: 'Project where image should be uploaded to'
+    required: true
+  image:
+    description: 'Source image with repository and tag'
+    required: true
+runs:
+  using: "composite"
+  steps: 
+    - name: Promote image
+      shell: bash
+      run: |
+        docker pull ${{ inputs.source_registry }}/${{ inputs.image }}
+        docker tag ${{ inputs.source_registry }}/${{ inputs.image }} ${{ inputs.destination_registry }}/${{ inputs.image }}
+        docker push ${{ inputs.destination_registry }}/${{ inputs.image }}
