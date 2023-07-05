@@ -10,6 +10,6 @@ jobs:
       - name: JIRA-prefix pull request title valiation
         uses: deepakputhraya/action-pr-title@v1.0.2
         with:
-          regex: '\[((RT|DMT|BUG|V3R|UR|GTM|ROUT)-\d+)\] +' # Regex the title should match.
+          regex: '\[((RT|DMT|BUG|V3R|UR|GTM|ROUT|HW)-\d+)\] +' # Regex the title should match.
           min_length: 5 # Min length of the title
           github_token: ${{ github.token }} # Default: ${{ github.token }}
