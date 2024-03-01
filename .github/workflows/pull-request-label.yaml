@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pull Request label validator
-        uses: mheap/github-action-required-labels@v1
+        uses: mheap/github-action-required-labels@v5
         with:
           labels: "chore, bug, feature, refactor, hotfix"
           mode: minimum
