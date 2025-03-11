@@ -10,6 +10,6 @@ jobs:
       - name: Pull Request label validator
         uses: mheap/github-action-required-labels@v5
         with:
-          labels: "chore, bug, feature, refactor, hotfix"
+          labels: "copy change, chore, bug, feature, refactor, hotfix"
           mode: minimum
           count: 1
